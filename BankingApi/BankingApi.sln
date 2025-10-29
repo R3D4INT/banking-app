@@ -4,14 +4,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.14.36301.6 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingApi.Api", "BankingApi\BankingApi.Api.csproj", "{633FBA0F-D705-47C5-855E-86D7E66620F1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{372281A9-23C2-4971-8013-B83DBBAC1B88} = {372281A9-23C2-4971-8013-B83DBBAC1B88}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingApi.Core", "BankingApi.Core\BankingApi.Core.csproj", "{5EA55FB5-A61E-4E9D-AABF-955714768060}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingApi.Infrastructure", "BankingApi.Infrastructure\BankingApi.Infrastructure.csproj", "{A1A6CD8F-DE38-4730-9968-4F56FD8C6B49}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5EA55FB5-A61E-4E9D-AABF-955714768060} = {5EA55FB5-A61E-4E9D-AABF-955714768060}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingApi.Application", "BankingApi.Application\BankingApi.Application.csproj", "{372281A9-23C2-4971-8013-B83DBBAC1B88}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5EA55FB5-A61E-4E9D-AABF-955714768060} = {5EA55FB5-A61E-4E9D-AABF-955714768060}
+		{A1A6CD8F-DE38-4730-9968-4F56FD8C6B49} = {A1A6CD8F-DE38-4730-9968-4F56FD8C6B49}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingApi.Tests", "BankingApi.Tests\BankingApi.Tests.csproj", "{2CB4D59D-83F5-4B9F-89A9-9191E61234CC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{372281A9-23C2-4971-8013-B83DBBAC1B88} = {372281A9-23C2-4971-8013-B83DBBAC1B88}
+		{633FBA0F-D705-47C5-855E-86D7E66620F1} = {633FBA0F-D705-47C5-855E-86D7E66620F1}
+		{A1A6CD8F-DE38-4730-9968-4F56FD8C6B49} = {A1A6CD8F-DE38-4730-9968-4F56FD8C6B49}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
