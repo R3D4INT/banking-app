@@ -17,7 +17,6 @@ public class TransactionsController : ControllerBase
     [HttpPost("deposit/{id}")]
     public async Task<IActionResult> Deposit(Guid id, [FromBody] TransactionRequest request)
     {
-        // No try/catch needed!
         await _transactionService.DepositAsync(id, request.Amount);
         return Ok(new { message = "Deposit successful." });
     }

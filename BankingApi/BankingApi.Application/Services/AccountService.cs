@@ -19,8 +19,10 @@ public class AccountService : IAccountManagementService, ITransactionService
     public async Task<Account> CreateAccountAsync(string ownerName, decimal initialBalance)
     {
         var account = new Account(ownerName, initialBalance);
+
         await _context.Accounts.AddAsync(account);
         await _context.SaveChangesAsync();
+
         return account;
     }
 
@@ -39,6 +41,7 @@ public class AccountService : IAccountManagementService, ITransactionService
     public async Task DepositAsync(Guid id, decimal amount)
     {
         var account = await GetAccountOrThrowAsync(id);
+
         if (amount <= 0)
         {
             throw new ArgumentException("Deposit amount must be positive.", nameof(amount));
@@ -101,10 +104,12 @@ public class AccountService : IAccountManagementService, ITransactionService
     private async Task<Account> GetAccountOrThrowAsync(Guid id)
     {
         var account = await _context.Accounts.FindAsync(id);
+
         if (account == null)
         {
             throw new KeyNotFoundException($"Account with id {id} not found.");
         }
+
         return account;
     }
 }
