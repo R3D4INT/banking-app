@@ -1,5 +1,7 @@
 using BankingApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using BankingApi.Application.Interfaces;
+using BankingApi.Application.Services;
 
 namespace BankingApi;
 
@@ -11,7 +13,10 @@ public class Program
 
         builder.Services.AddDbContext<BankingDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
         // Add services to the container.
+        builder.Services.AddScoped<IAccountManagementService, AccountService>();
+        builder.Services.AddScoped<ITransactionService, AccountService>();
 
         builder.Services.AddControllers();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
