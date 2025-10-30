@@ -7,6 +7,8 @@ This is a simple REST API for a banking application, built with .NET 9, ASP.NET 
 * **Account Management:** Create new accounts, get account details, and list all accounts.
 * **Account Transactions:** Deposit, withdraw, and transfer funds between accounts.
 * **Data Integrity:** Fund transfers are performed using EF Core's database transactions to ensure atomicity (all or nothing).
+* **Robust Validation:** All API inputs are validated using `FluentValidation` to ensure data integrity before hitting the service layer.
+* **Global Error Handling:** A central middleware class handles all exceptions (e.g., `NotFound`, `InvalidOperation`) and returns clean, consistent JSON error responses.
 * **API Documentation:** A Swagger (OpenAPI) interface is available at `/swagger` to view and test all endpoints.
 
 ---
@@ -19,10 +21,15 @@ This is a simple REST API for a banking application, built with .NET 9, ASP.NET 
 * **Architecture (Clean Architecture):**
     * `BankingApi.Core`: Contains only the `Account` domain entity. It has no dependencies.
     * `BankingApi.Infrastructure`: Manages data access, containing the `BankingDbContext` and EF Core migrations.
-    * `BankingApi.Application`: Contains all business logic, interfaces (`IAccountManagementService`, `ITransactionService`), and the `AccountService` implementation.
+    * `BankingApi.Application`: Contains all business logic, interfaces (`IAccountManagementService`, `ITransactionService`), DTOs, and services.
     * `BankingApi.Api`: The public-facing API layer, containing only the Controllers and `Program.cs`.
-* **Design Pattern (Interface Segregation):** The service logic was split into `IAccountManagementService` and `ITransactionService`. This creates a cleaner, more secure design where controllers only have access to the methods they truly need.
-* **Testing:** **xUnit** was used for unit testing the service layer. The **EF Core In-Memory Database** was used to provide a fast, isolated database for each test, with transaction warnings suppressed to allow for testing the `TransferAsync` logic.
+* **Design Patterns:**
+    * **Interface Segregation:** The service logic was split into `IAccountManagementService` and `ITransactionService`. This creates a cleaner, more secure design where controllers only have access to the methods they truly need.
+    * **Middleware:** A `GlobalErrorHandlingMiddleware` intercepts all exceptions, removing repetitive `try/catch` blocks from controllers.
+* **Quality & Tooling:**
+    * **Input Validation:** **FluentValidation** is used to enforce business rules on all DTOs (e.g., positive amounts, required names).
+    * **Object Mapping:** **AutoMapper** is used to automatically map `Account` domain entities to `AccountResponse` DTOs, removing boilerplate code from controllers.
+    * **Unit Testing:** **xUnit** was used for unit testing the service layer. The **EF Core In-Memory Database** provides a fast, isolated database for each test, with transaction warnings suppressed to allow for testing the `TransferAsync` logic.
 
 ---
 
