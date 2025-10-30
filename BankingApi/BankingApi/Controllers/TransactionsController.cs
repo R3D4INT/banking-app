@@ -24,7 +24,7 @@ public class TransactionsController : ControllerBase
             return Ok(new { message = "Deposit successful." });
         }
         catch (Exception ex)
-        {]
+        {
             return BadRequest(new { error = ex.Message });
         }
     }
