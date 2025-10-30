@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BankingApi.Core\BankingApi.Core.csproj" />
     <ProjectReference Include="..\BankingApi.Infrastructure\BankingApi.Infrastructure.csproj" />
   </ItemGroup>

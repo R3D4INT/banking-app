@@ -1,4 +1,5 @@
-﻿using BankingApi.Application.DTOs;
+﻿using AutoMapper;
+using BankingApi.Application.DTOs;
 using BankingApi.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,24 +10,18 @@ namespace BankingApi.Api.Controllers;
 public class AccountsController : ControllerBase
 {
     private readonly IAccountManagementService _accountService;
-
-    public AccountsController(IAccountManagementService accountService)
+    private readonly IMapper _mapper; 
+    public AccountsController(IAccountManagementService accountService, IMapper mapper)
     {
         _accountService = accountService;
+        _mapper = mapper;
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateAccount([FromBody] CreateAccountRequest request)
     {
         var account = await _accountService.CreateAccountAsync(request.OwnerName, request.InitialBalance);
-
-        var response = new AccountResponse
-        {
-            Id = account.Id,
-            OwnerName = account.OwnerName,
-            Balance = account.Balance,
-            CreatedAt = account.CreatedAt
-        };
+        var response = _mapper.Map<AccountResponse>(account);
 
         return CreatedAtAction(nameof(GetAccount), new { id = account.Id }, response);
     }
@@ -40,13 +35,7 @@ public class AccountsController : ControllerBase
             return NotFound();
         }
 
-        var response = new AccountResponse
-        {
-            Id = account.Id,
-            OwnerName = account.OwnerName,
-            Balance = account.Balance,
-            CreatedAt = account.CreatedAt
-        };
+        var response = _mapper.Map<AccountResponse>(account);
 
         return Ok(response);
     }
@@ -55,14 +44,7 @@ public class AccountsController : ControllerBase
     public async Task<IActionResult> GetAllAccounts()
     {
         var accounts = await _accountService.GetAllAccountsAsync();
-
-        var response = accounts.Select(account => new AccountResponse
-        {
-            Id = account.Id,
-            OwnerName = account.OwnerName,
-            Balance = account.Balance,
-            CreatedAt = account.CreatedAt
-        });
+        var response = _mapper.Map<IEnumerable<AccountResponse>>(accounts);
 
         return Ok(response);
     }
